@@ -5,6 +5,7 @@
 import { Button } from 'react-bootstrap';
 // import { signOut } from '@/utils/auth'; // anything in the src dir, you can use the @ instead of relative paths
 import { useAuth } from '@/utils/context/authContext';
+import Link from 'next/link'; // Import the Link component from Next.js
 
 function Home() {
   const { user } = useAuth();
@@ -26,9 +27,13 @@ function Home() {
       <Button variant="primary" type="button" size="lg" className="copy-btn">
         Explore Projects
       </Button>
-      <Button variant="info" type="button" size="lg" className="copy-btn">
-        Create New Project
-      </Button>
+
+      {/* Use Next.js Link for navigation */}
+      <Link href="/projects/new" passHref>
+        <Button variant="info" type="button" size="lg" className="copy-btn mt-4">
+          Create New Project
+        </Button>
+      </Link>
     </div>
   );
 }
