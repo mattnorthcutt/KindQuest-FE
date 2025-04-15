@@ -22,7 +22,7 @@ export default function AboutUs() {
         <p className="text-gray-700 mb-6">We envision a world where communities are empowered to take initiative, solve problems, and support one another—one project at a time. KindQuest is here to be the bridge between intention and action.</p>
 
         <div className="mt-10">
-          <Link className="nav-link" href="/github">
+          <Link className="nav-link" href="/contributors">
             Contributors
           </Link>
         </div>
