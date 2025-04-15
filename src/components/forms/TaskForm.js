@@ -91,7 +91,7 @@ TaskForm.propTypes = {
     taskDescription: PropTypes.string,
     datePosted: PropTypes.string,
     isCompleted: PropTypes.bool,
-    projectId: PropTypes.string,
+    taskId: PropTypes.string,
   }),
 };
 
