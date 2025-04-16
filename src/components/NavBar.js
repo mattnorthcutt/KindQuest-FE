@@ -31,6 +31,7 @@ export default function NavBar() {
         }}
       >
         <img
+          className="fade-in"
           style={{
             borderRadius: '50px',
             width: '75px',
@@ -85,6 +86,7 @@ export default function NavBar() {
               }}
             >
               <Image
+                className="fade-in"
                 style={{
                   width: '60px',
                   height: '60px',
