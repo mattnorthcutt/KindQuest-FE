@@ -17,6 +17,7 @@ function Signin() {
         Welcome to <span className="text-info">KindQuest</span>
       </h1>
       <img
+        className="spin-on-load"
         style={{
           borderRadius: '50%',
           width: '200px',
