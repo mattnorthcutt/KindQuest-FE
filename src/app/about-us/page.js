@@ -4,7 +4,7 @@ import React from 'react';
 export default function AboutUs() {
   return (
     <div>
-      <section className="max-w-4xl mx-auto p-6 text-center">
+      <section className="fade-in max-w-4xl mx-auto p-6 text-center">
         <h1 className="text-4xl font-bold mb-4">About KindQuest</h1>
         <p className="text-lg mb-6 text-gray-700">KindQuest is a community-powered platform designed to connect passionate volunteers with impactful projects in their local area and beyond. Our mission is to make doing good easier, more visible, and more collaborative.</p>
         <h2 className="text-2xl font-semibold mt-8 mb-3">Why We Exist</h2>

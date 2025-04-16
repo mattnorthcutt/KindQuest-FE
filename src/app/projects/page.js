@@ -22,7 +22,7 @@ function ProjectsPage() {
   // }, []);
 
   return (
-    <div className="text-center my-4">
+    <div className="fade-in text-center my-4">
       <Link href="/projects/new" passHref>
         <Button>Add A Project</Button>
       </Link>

@@ -6,7 +6,7 @@ export default function ProfilePage() {
   const { user } = useAuth();
 
   return (
-    <div style={{ margin: '20px auto', maxWidth: '600px', textAlign: 'center' }}>
+    <div className="fade-in" style={{ margin: '20px auto', maxWidth: '600px', textAlign: 'center' }}>
       <img src={user.photoURL} alt="profile images" style={{ borderRadius: '50%', width: '150px', height: '150px', marginBottom: '20px' }} />
       <h1 style={{ fontSize: '2rem', marginBottom: '10px' }}>{user.displayName}</h1>
       <p style={{ fontSize: '1.2rem', color: '#555' }}>{user.email}</p>

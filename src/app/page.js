@@ -9,7 +9,7 @@ function Home() {
 
   return (
     <div
-      className="text-center d-flex flex-column justify-content-center align-content-center"
+      className="fade-in text-center d-flex flex-column justify-content-center align-content-center"
       style={{
         height: '90vh',
         padding: '30px',
