@@ -1,16 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
-import { useTheme } from '@/utils/context/ThemeContext';
+// import { useTheme } from '@/utils/context/ThemeContext';
 import Link from 'next/link';
 import { Navbar, Nav, Dropdown, Image } from 'react-bootstrap';
 import { useAuth } from '@/utils/context/authContext';
 import { FiLogOut } from 'react-icons/fi';
+import ThemeToggle from './ThemeToggle';
 import { signOut } from '../utils/auth';
 
 export default function NavBar() {
   const [userImg, setUserImg] = useState(null);
 
-  const { theme, toggleTheme } = useTheme();
+  // const { theme, toggleTheme } = useTheme();
 
   const { user } = useAuth();
 
@@ -107,7 +108,11 @@ export default function NavBar() {
                 Settings
               </Dropdown.Item>
 
-              <Dropdown.Item onClick={toggleTheme}>{theme === 'light' ? '🌙 Switch to Dark Mode' : '☀️ Switch to Light Mode'}</Dropdown.Item>
+              <div className="px-3 py-2">
+                <ThemeToggle />
+              </div>
+
+              {/* <Dropdown.Item onClick={toggleTheme}>{theme === 'light' ? '🌙 Switch to Dark Mode' : '☀️ Switch to Light Mode'}</Dropdown.Item> */}
 
               <Dropdown.Divider />
 
