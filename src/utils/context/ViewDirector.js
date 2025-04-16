@@ -3,6 +3,7 @@ import { useAuth } from '@/utils/context/authContext';
 import Loading from '@/components/Loading';
 import SignIn from '@/components/SignIn';
 import NavBar from '@/components/NavBar';
+import Footer from '../../components/Footer';
 
 function ViewDirectorBasedOnUserAuthStatus({ children }) {
   const { user, userLoading } = useAuth();
@@ -17,7 +18,8 @@ function ViewDirectorBasedOnUserAuthStatus({ children }) {
     return (
       <>
         <NavBar /> {/* NavBar only visible if user is logged in and is in every view */}
-        {children}
+        <main className="flex-grow-1">{children}</main>
+        <Footer />
       </>
     );
   }
