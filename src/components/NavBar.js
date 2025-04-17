@@ -95,7 +95,7 @@ export default function NavBar() {
                   borderRadius: '100px',
                   borderColor: 'grey',
                 }}
-                src={userImg}
+                src={userImg || '/images/default-avatar.png'}
               />
               {/* <span className="d-none d-md-inline">{user.displayName || user.email}</span> */}
             </Dropdown.Toggle>
