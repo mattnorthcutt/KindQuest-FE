@@ -126,3 +126,17 @@ body.dark .dropdown-item.text-danger:hover {
 .theme-toggle.dark .icon {
   transform: rotate(180deg);
 }
+
+/* Dropdown slide/fade in animation */
+@keyframes dropdownFadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
