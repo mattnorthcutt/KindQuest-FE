@@ -1,32 +1,52 @@
-import Link from 'next/link';
+'use client';
+
 import React from 'react';
+import Link from 'next/link';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import { useTheme } from '@/utils/context/ThemeContext';
+import TestimonialCard from '@/components/TestimonialCards';
 
 export default function AboutUs() {
+  const { theme } = useTheme();
+
   return (
-    <div>
-      <section className="fade-in max-w-4xl mx-auto p-6 text-center">
-        <h1 className="text-4xl font-bold mb-4">About KindQuest</h1>
-        <p className="text-lg mb-6 text-gray-700">KindQuest is a community-powered platform designed to connect passionate volunteers with impactful projects in their local area and beyond. Our mission is to make doing good easier, more visible, and more collaborative.</p>
-        <h2 className="text-2xl font-semibold mt-8 mb-3">Why We Exist</h2>
-        <p className="text-gray-700 mb-6">Whether you’re an organization seeking help, a volunteer looking to give back, or a community leader with an idea—you belong here.</p>
-        <p className="text-gray-700 mb-6">KindQuest was created to streamline how people connect with causes that matter.</p>
-        <p className="text-gray-700 mb-6">We believe in the power of everyday kindness to create lasting change.</p>
-        <h2 className="text-2xl font-semibold mt-8 mb-3">How It Works</h2>
-        <ul className="list-disc list-inside text-left text-gray-700 max-w-xl mx-auto">
-          <li>Explore or start projects that address local needs</li>
-          <li>Sign up to volunteer for specific tasks</li>
-          <li>Track progress and celebrate completed projects</li>
-        </ul>
-
-        <h2 className="text-2xl font-semibold mt-8 mb-3">Our Vision</h2>
-        <p className="text-gray-700 mb-6">We envision a world where communities are empowered to take initiative, solve problems, and support one another—one project at a time. KindQuest is here to be the bridge between intention and action.</p>
-
-        <div className="mt-10">
-          <Link className="nav-link" href="/contributors">
-            Contributors
-          </Link>
-        </div>
+    <div className={theme === 'dark' ? 'bg-dark text-light' : 'bg-light text-dark'}>
+      <section className={`py-5 text-center ${theme === 'dark' ? 'bg-gradient bg-dark text-light' : 'bg-gradient bg-info text-white'}`}>
+        <Container>
+          <h1 className="display-4 fw-bold">About KindQuest</h1>
+          <p className="lead">Empowering everyday kindness through community-driven action.</p>
+        </Container>
       </section>
+      <Container className="py-5">
+        <Row className="mb-4">
+          <Col>
+            <h2 className="h4 fw-semibold">Why We Exist</h2>
+            <p>Whether you are an organization seeking help, a volunteer looking to give back, or a community leader with an idea — you belong here.</p>
+            <p>KindQuest was created to streamline how people connect with causes that matter. We believe small acts of kindness can build lasting impact.</p>
+          </Col>
+        </Row>
+
+        <Row className="mb-4">
+          <Col>
+            <h2 className="h4 fw-semibold">Our Vision</h2>
+            <p>We envision a world where communities are empowered to take initiative, solve problems, and support one another—one project at a time. KindQuest is here to be the bridge between intention and action.</p>
+          </Col>
+        </Row>
+
+        <Row className="my-5">
+          <Col md={{ span: 10, offset: 1 }}>
+            <TestimonialCard theme={theme} />
+          </Col>
+        </Row>
+
+        <Row className="text-center mt-4">
+          <Col>
+            <Link href="/contributors" passHref>
+              <Button variant={theme === 'dark' ? 'outline-light' : 'outline-dark'}>Meet the Contributors</Button>
+            </Link>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
