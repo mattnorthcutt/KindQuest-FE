@@ -139,4 +139,14 @@ body.dark .dropdown-item.text-danger:hover {
   }
 }
 
+body.dark .card {
+  background-color: #1f1f1f;
+  color: white;
+}
+
+.gradient-text {
+  background: linear-gradient(to right, #888888, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
