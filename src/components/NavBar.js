@@ -39,15 +39,20 @@ export default function NavBar() {
       {isOpen && (
         <div className="sidebar-content">
           {user && (
-            <div className="profile d-flex flex-column align-items-center mb-4">
+            <div className="profile d-flex flex-column align-items-center mb-2">
               <Image src={userImg} roundedCircle width={60} height={60} alt="User Avatar" />
               <div className="text-white mt-2">{capitalizeName(user.displayName)}</div>
-              <Link href="/profile" className="nav-link d-flex align-items-center gap-2">
+              <Link
+                style={{
+                  borderBottom: '1px solid grey',
+                }}
+                href="/profile"
+                className="nav-link d-flex align-items-center gap-2"
+              >
                 <CgProfile /> Profile
               </Link>
             </div>
           )}
-
           <Nav className="flex-column px-3">
             <Nav.Item>
               <Link href="/" className="nav-link d-flex align-items-center gap-2">
@@ -74,14 +79,19 @@ export default function NavBar() {
             </Nav.Item>
 
             <Nav.Item>
-              <Link href="/about-us" className="nav-link d-flex align-items-center gap-2">
+              <Link href="/about-us" className="nav-link d-flex align-items-center gap-2 ">
                 <FiInfo /> About
               </Link>
             </Nav.Item>
           </Nav>
 
-          <div className="px-3 mt-2 mb-2">
-            <div className="px-3 mt-3 m-0">
+          <div className="px-3 mt-10">
+            <div
+              style={{
+                marginTop: '375px',
+              }}
+              className="px-3 mt-10 "
+            >
               <ThemeToggle />
             </div>
             <Button variant="outline-danger" onClick={signOut} className="w-100">
