@@ -2,10 +2,10 @@
 
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { useTheme } from '@/utils/context/ThemeContext';
+import { useDiffTheme } from '@/utils/context/ThemeContext';
 
 function ThemeWrapper({ children }) {
-  const { theme } = useTheme();
+  const { theme } = useDiffTheme();
   const [fadeClass, setFadeClass] = useState('');
 
   useEffect(() => {

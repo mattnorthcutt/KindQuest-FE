@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google';
 import PropTypes from 'prop-types';
 import ClientProvider from '@/utils/context/ClientProvider';
 import ThemeWrapper from '@/components/ThemeWrapper';
-import { ThemeProvider } from '@/utils/context/ThemeContext';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/styles/globals.css';
@@ -14,11 +13,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider>
-          <ClientProvider>
-            <ThemeWrapper>{children}</ThemeWrapper>
-          </ClientProvider>
-        </ThemeProvider>
+        <ClientProvider>
+          <ThemeWrapper>{children}</ThemeWrapper>
+        </ClientProvider>
       </body>
     </html>
   );
