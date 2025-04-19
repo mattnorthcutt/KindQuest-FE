@@ -3,11 +3,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { useDiffTheme } from '@/utils/context/ThemeContext';
+import { useTheme } from '@/utils/context/ThemeContext';
 import RateCard from '@/components/RateCard';
 
 export default function AboutUs() {
-  const { theme } = useDiffTheme();
+  const { theme } = useTheme();
 
   return (
     <div className={theme === 'dark' ? 'bg-dark text-light' : 'bg-light text-dark'}>

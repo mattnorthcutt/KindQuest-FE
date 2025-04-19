@@ -1,34 +1,54 @@
 'use client';
 
-import React, { createContext, useMemo, useContext } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import useTheme from './useTheme';
 
 const ThemeContext = createContext();
 
-export default function ThemeProvider({ children }) {
-  const [theme, setTheme] = useTheme('light');
+export function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState('light');
+  const [mounted, setMounted] = useState(false);
 
-  const value = useMemo(() => {
-    const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
-    return {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedTheme = localStorage.getItem('theme');
+      if (storedTheme && storedTheme !== theme) {
+        setTheme(storedTheme);
+      }
+      setMounted(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      localStorage.setItem('theme', theme);
+      document.body.classList.remove('light', 'dark');
+      document.body.classList.add(theme);
+    }
+  }, [theme, mounted]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
+
+  const contextValue = useMemo(
+    () => ({
       theme,
       setTheme,
       toggleTheme,
-    };
-  }, [theme, setTheme]);
+    }),
+    [theme, setTheme],
+  );
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>;
 }
 
 ThemeProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export const useDiffTheme = () => {
+export const useTheme = () => {
   const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
+  if (!context) throw new Error('useTheme must be used within ThemeProvider');
   return context;
 };
