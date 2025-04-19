@@ -3,15 +3,15 @@
 import React from 'react';
 import Link from 'next/link';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { useTheme } from '@/utils/context/ThemeContext';
+import { useDiffTheme } from '@/utils/context/ThemeContext';
 import RateCard from '@/components/RateCard';
 
 export default function AboutUs() {
-  const { theme } = useTheme();
+  const { theme } = useDiffTheme();
 
   return (
     <div className={theme === 'dark' ? 'bg-dark text-light' : 'bg-light text-dark'}>
-      <section className={`py-5 text-center ${theme === 'dark' ? 'bg-gradient bg-dark text-light' : 'bg-gradient bg-info text-white'}`}>
+      <section className={`py-5 text-center ${theme === 'dark' ? 'bg-gradient bg-dark text-light' : 'bg-gradient bg-light text-dark'}`}>
         <Container>
           <h1 className="display-4 fw-bold">About KindQuest</h1>
           <p className="lead">Empowering everyday kindness through community-driven action.</p>

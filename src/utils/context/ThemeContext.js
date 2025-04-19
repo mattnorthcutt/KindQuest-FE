@@ -1,29 +1,34 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
+import React, { createContext, useMemo, useContext } from 'react';
 import PropTypes from 'prop-types';
+import useTheme from './useTheme';
 
 const ThemeContext = createContext();
 
-export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+export default function ThemeProvider({ children }) {
+  const [theme, setTheme] = useTheme('light');
 
-  useEffect(() => {
-    document.body.className = '';
-    document.body.classList.add(theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
-
-  // 👇 useMemo to avoid recreating the object on every render
-  const value = useMemo(() => ({ theme, toggleTheme }), [theme]);
+  const value = useMemo(() => {
+    const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
+    return {
+      theme,
+      setTheme,
+      toggleTheme,
+    };
+  }, [theme, setTheme]);
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 
-export const useTheme = () => useContext(ThemeContext);
-
 ThemeProvider.propTypes = {
   children: PropTypes.node.isRequired,
+};
+
+export const useDiffTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
 };
