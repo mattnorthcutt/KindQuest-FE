@@ -28,8 +28,7 @@ function Signin() {
         src="/images/logonav.png"
         alt="KindQuest Logo"
       />
-      <p className="text-warning">Join us to change the world from your own neighborhood!</p>
-      <p>Click the button below to login!</p>
+      <p className="text-info">Empowering everyday kindness through community-driven action.</p>
       <Button type="button" variant="success" size="lg" className="copy-btn" onClick={signIn}>
         Sign In
       </Button>
