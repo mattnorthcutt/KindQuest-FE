@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useTheme } from '@/utils/context/ThemeContext';
-import TestimonialCard from '@/components/TestimonialCards';
+import RateCard from '@/components/RateCard';
 
 export default function AboutUs() {
   const { theme } = useTheme();
@@ -35,7 +35,7 @@ export default function AboutUs() {
 
         <Row className="my-5">
           <Col md={{ span: 10, offset: 1 }}>
-            <TestimonialCard theme={theme} />
+            <RateCard theme={theme} />
           </Col>
         </Row>
 

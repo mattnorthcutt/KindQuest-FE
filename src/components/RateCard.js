@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
 
-const testimonials = [
+const rates = [
   {
     quote: 'KindQuest helped us find volunteers faster than ever! We completed our community project in 2 weeks!',
     author: 'Rando',
@@ -33,42 +33,42 @@ const testimonials = [
   },
 ];
 
-export default function TestimonialCard({ theme }) {
-  // currentIndex tells us which testimonial in the array to show
-  // It starts at 0 (the first testimonial)
+export default function RateCard({ theme }) {
+  // currentIndex tells us which rate in the array to show
+  // It starts at 0 (the first rate)
   // When we want to change the quote, we update this index
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // useEffect runs when the component mounts
-  // setInterval() runs code every 5,000 milliseconds (10 seconds)
+  // setInterval() runs code every 5,000 milliseconds (5 seconds)
   // It updates currentIndex:
-  // If we're at the last quote, go back to the first (index 0)
+  // If we're at the last rate, go back to the first (index 0)
   // Otherwise, move to the next one
   // The return () => clearInterval(interval) part:
   // Makes sure the interval is cleared when the component unmounts
   // Prevents memory leaks or duplicate timers
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1));
+      setCurrentIndex((prevIndex) => (prevIndex === rates.length - 1 ? 0 : prevIndex + 1));
     }, 5000);
 
     return () => clearInterval(interval);
   }, []);
 
   // This picks the quote to show from the testimonials[] array
-  // It uses the current index (which updates every 10s)
-  const currentTestimonial = testimonials[currentIndex];
+  // It uses the current index (which updates every 5s)
+  const currentRate = rates[currentIndex];
 
   return (
     <Card className={`border-start border-5 shadow-sm transition-opacity duration-500 ease-in-out ${theme === 'dark' ? 'bg-secondary text-light' : 'bg-light text-dark'}`}>
       <Card.Body>
-        <Card.Text className="fst-italic">“{currentTestimonial.quote}”</Card.Text>
-        <Card.Subtitle className={`text-end fw-semibold mt-2 ${theme === 'dark' ? 'text-info' : 'text-primary'}`}>{currentTestimonial.author}</Card.Subtitle>
+        <Card.Text className="fst-italic">“{currentRate.quote}”</Card.Text>
+        <Card.Subtitle className={`text-end fw-semibold mt-2 ${theme === 'dark' ? 'text-info' : 'text-primary'}`}>{currentRate.author}</Card.Subtitle>
       </Card.Body>
     </Card>
   );
 }
 
-TestimonialCard.propTypes = {
+RateCard.propTypes = {
   theme: PropTypes.node.isRequired,
 };
