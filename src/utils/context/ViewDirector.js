@@ -24,6 +24,8 @@ function ViewDirectorBasedOnUserAuthStatus({ children }) {
     );
   }
 
+  if (!user && !Loading) return null;
+
   return <SignIn />;
 }
 
