@@ -157,3 +157,56 @@ body.dark .card {
   justify-content: center; 
   padding: 16px; 
 }
+
+.side-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 250px;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  background-color: #343a40;
+  color: white;
+  z-index: 1000;
+  padding-top: 60px;
+}
+
+.side-navbar.open {
+  transform: translateX(0);
+}
+
+.toggle-btn {
+  position: absolute;
+  top: 20px;
+  right: -40px;
+  width: 40px;
+  height: 40px;
+  background-color: #343a40;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.nav-link {
+  color: white !important;
+  padding: 10px 0;
+}
+
+.nav-link:hover {
+  background-color: #495057;
+  border-radius: 4px;
+  padding-left: 12px;
+}

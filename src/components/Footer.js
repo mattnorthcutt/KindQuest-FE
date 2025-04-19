@@ -8,8 +8,9 @@ export default function Footer() {
   return (
     <footer
       style={{
+        borderTop: '3px Solid grey',
         width: '100%',
-        backgroundColor: '#343a40', // Matches the dark theme of Navbar
+        backgroundColor: '#202325', // Matches the dark theme of Navbar
         color: 'white',
         padding: '20px 0',
       }}

@@ -1,130 +1,95 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+'use client';
+
 import React, { useState, useEffect } from 'react';
-// import { useTheme } from '@/utils/context/ThemeContext';
+import { Nav, Button, Image } from 'react-bootstrap';
+import { FiHome, FiUsers, FiUserCheck, FiClipboard, FiInfo, FiLogOut, FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import Link from 'next/link';
-import { Navbar, Nav, Dropdown, Image } from 'react-bootstrap';
 import { useAuth } from '@/utils/context/authContext';
-import { FiLogOut } from 'react-icons/fi';
+import { signOut } from '@/utils/auth';
+import { CgProfile } from 'react-icons/cg';
 import ThemeToggle from './ThemeToggle';
-import { signOut } from '../utils/auth';
 
 export default function NavBar() {
   const [userImg, setUserImg] = useState(null);
-
-  // const { theme, toggleTheme } = useTheme();
-
+  const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
-    setUserImg(user.photoURL || '/images/default-avatar.png');
-  }, [user.photoURL]);
+    setUserImg(user?.photoURL || '/images/default-avatar.png');
+  }, [user?.photoURL]);
 
-  console.log('Current user:', user);
+  // split(' '): breaks "john doe" -> ['Matt', 'Northcutt']
+  // charAt(0).toUpperCase() -> M, N
+  // slice(1).toLowerCase() -> att, orthcutt
+  // Rejoins -> "Matt Northcutt"
+  function capitalizeName(name) {
+    if (!name) return '';
+    return name
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  }
 
   return (
-    <Navbar style={{ width: '100%' }} collapseOnSelect expand="md" bg="dark" variant="dark">
-      <Link
-        passHref
-        href="/"
-        className="navbar-brand"
-        style={{
-          width: '75px',
-          height: '75px',
-        }}
-      >
-        <img
-          className="fade-in"
-          style={{
-            borderRadius: '50px',
-            width: '75px',
-            height: '75px',
-          }}
-          src="/images/logonav.png"
-          alt="home"
-        />
-      </Link>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="home">
-          {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
-          <Link className="nav-link" href="/">
-            Home
-          </Link>
-        </Nav>
-        <Nav className="org">
-          {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
-          <Link className="nav-link" href="/organizations">
-            Organizations
-          </Link>
-        </Nav>
-        <Nav className="vol">
-          {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
-          <Link className="nav-link" href="/volunteers">
-            Volunteers
-          </Link>
-        </Nav>
-        <Nav className="about">
-          {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
-          <Link className="nav-link" href="/about-us">
-            About
-          </Link>
-        </Nav>
-        {user ? (
-          <Dropdown
-            className="bg-dark text-white ms-auto mr-5"
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              color: 'grey',
-            }}
-            align="end"
-          >
-            <Dropdown.Toggle
-              variant="dark"
-              id="dropdown-user"
-              className="d-flex align-items-center border-dark rounded px-2"
-              style={{
-                borderColor: 'grey',
-              }}
-            >
-              <Image
-                className="fade-in"
-                style={{
-                  width: '60px',
-                  height: '60px',
-                  borderRadius: '100px',
-                  borderColor: 'grey',
-                }}
-                src={userImg || '/images/default-avatar.png'}
-              />
-              {/* <span className="d-none d-md-inline">{user.displayName || user.email}</span> */}
-            </Dropdown.Toggle>
+    <div className={`side-navbar ${isOpen ? 'open' : ''}`} onMouseLeave={() => setIsOpen(false)}>
+      <Button variant="dark" className="toggle-btn" onClick={() => setIsOpen(!isOpen)}>
+        {isOpen ? <FiArrowLeft /> : <FiArrowRight />}
+      </Button>
 
-            <Dropdown.Menu>
-              <Dropdown.Item as={Link} href="/profile">
-                My Profile
-              </Dropdown.Item>
-              <Dropdown.Item as={Link} href="/settings">
-                Settings
-              </Dropdown.Item>
+      {isOpen && (
+        <div className="sidebar-content">
+          {user && (
+            <div className="profile d-flex flex-column align-items-center mb-4">
+              <Image src={userImg} roundedCircle width={60} height={60} alt="User Avatar" />
+              <div className="text-white mt-2">{capitalizeName(user.displayName)}</div>
+              <Link href="/profile" className="nav-link d-flex align-items-center gap-2">
+                <CgProfile /> Profile
+              </Link>
+            </div>
+          )}
 
-              <div className="px-3 py-2">
-                <ThemeToggle />
-              </div>
+          <Nav className="flex-column px-3">
+            <Nav.Item>
+              <Link href="/" className="nav-link d-flex align-items-center gap-2">
+                <FiHome /> Home
+              </Link>
+            </Nav.Item>
 
-              {/* <Dropdown.Item onClick={toggleTheme}>{theme === 'light' ? '🌙 Switch to Dark Mode' : '☀️ Switch to Light Mode'}</Dropdown.Item> */}
+            <Nav.Item>
+              <Link href="/organizations" className="nav-link d-flex align-items-center gap-2">
+                <FiUsers /> Organizations
+              </Link>
+            </Nav.Item>
 
-              <Dropdown.Divider />
+            <Nav.Item>
+              <Link href="/volunteers" className="nav-link d-flex align-items-center gap-2">
+                <FiUserCheck /> Volunteers
+              </Link>
+            </Nav.Item>
 
-              <Dropdown.Item onClick={signOut} className="text-danger d-flex align-items-center gap-2">
-                <FiLogOut /> Sign Out
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        ) : (
-          'no'
-        )}
-      </Navbar.Collapse>
-    </Navbar>
+            <Nav.Item>
+              <Link href="/projects" className="nav-link d-flex align-items-center gap-2">
+                <FiClipboard /> Projects
+              </Link>
+            </Nav.Item>
+
+            <Nav.Item>
+              <Link href="/about-us" className="nav-link d-flex align-items-center gap-2">
+                <FiInfo /> About
+              </Link>
+            </Nav.Item>
+          </Nav>
+
+          <div className="px-3 mt-2 mb-2">
+            <div className="px-3 mt-3 m-0">
+              <ThemeToggle />
+            </div>
+            <Button variant="outline-danger" onClick={signOut} className="w-100">
+              <FiLogOut /> Sign Out
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

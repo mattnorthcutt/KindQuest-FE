@@ -1,11 +1,11 @@
 'use client';
 
 import { Button } from 'react-bootstrap';
-import { useDiffTheme } from '@/utils/context/ThemeContext';
+import { useTheme } from '@/utils/context/ThemeContext';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 function ThemeToggle() {
-  const { theme, toggleTheme } = useDiffTheme();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="theme-toggle-wrapper">

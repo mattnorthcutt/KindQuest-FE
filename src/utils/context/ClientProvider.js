@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import { AuthProvider } from '@/utils/context/authContext'; // AuthProvider handles authentication state and must run on the client.
 import ViewDirectorBasedOnUserAuthStatus from '@/utils/context/ViewDirector'; // ViewDirector manages what the user sees based on their authentication status.
-import ThemeProvider from './ThemeContext';
+import { ThemeProvider } from './ThemeContext';
 
 function ClientProvider({ children }) {
   return (
