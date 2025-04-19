@@ -14,10 +14,6 @@ export function ThemeProvider({ children }) {
       const storedTheme = localStorage.getItem('theme');
       if (storedTheme && storedTheme !== theme) {
         setTheme(storedTheme);
-      } else {
-        // Apply the initial theme if no stored value
-        document.body.classList.remove('light', 'dark');
-        document.body.classList.add(theme);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
