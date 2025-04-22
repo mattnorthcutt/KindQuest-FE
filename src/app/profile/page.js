@@ -5,7 +5,7 @@ import { useAuth } from '@/utils/context/authContext';
 export default function ProfilePage() {
   const { user } = useAuth();
 
-  // split(' '): breaks "john doe" -> ['Matt', 'Northcutt']
+  // split(' '): breaks "Matt Northcutt" -> ['Matt', 'Northcutt']
   // charAt(0).toUpperCase() -> M, N
   // slice(1).toLowerCase() -> att, orthcutt
   // Rejoins -> "Matt Northcutt"
