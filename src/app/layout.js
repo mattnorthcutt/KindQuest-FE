@@ -25,18 +25,17 @@ RootLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-// ✅ Fixed generateMetadata function
-export const generateMetadata = async ({ params }) => {
-  const { slug } = params;
+export const metadata = {
+  title: 'KindQuest - Home',
+  icons: {
+    icon: '/images/home-icon.png',
+  },
+};
 
-  return {
-    title: `KindQuest - ${slug || 'HOME'}`,
-    description: `This is a dynamically generated description for ${slug}.`,
-    keywords: [slug, 'dynamic', 'page'],
-    openGraph: {
-      title: `Open Graph Title for ${slug}`,
-      description: `Open Graph Description for ${slug}`,
-      url: `https://yourwebsite.com/${slug}`,
-    },
-  };
+export function HomeLayout({ children }) {
+  return <div>{children}</div>;
+}
+
+HomeLayout.propTypes = {
+  children: PropTypes.node.isRequired,
 };

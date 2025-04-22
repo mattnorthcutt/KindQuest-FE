@@ -18,7 +18,7 @@ export default function NavBar() {
     setUserImg(user?.photoURL || '/images/default-avatar.png');
   }, [user?.photoURL]);
 
-  // split(' '): breaks "john doe" -> ['Matt', 'Northcutt']
+  // split(' '): breaks "Matt Northcutt" -> ['Matt', 'Northcutt']
   // charAt(0).toUpperCase() -> M, N
   // slice(1).toLowerCase() -> att, orthcutt
   // Rejoins -> "Matt Northcutt"
