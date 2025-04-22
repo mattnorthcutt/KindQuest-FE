@@ -6,7 +6,7 @@ import { Row, Card } from 'react-bootstrap';
 
 function BasicExample() {
   return (
-    <>
+    <div className="fade-in text-center my-4">
       <Card style={{ textAlign: 'center', border: 'none' }}>
         <h1 className="text-2xl font-semibold mt-8 mb-3">Organizations</h1>
         <h3 className="text-lg mb-6 text-gray-700">KindQuest is a community-powered platform designed to connect passionate volunteers with impactful projects in their local area and beyond. Our mission is to make doing good easier, more visible, and more collaborative.</h3>
@@ -61,7 +61,7 @@ function BasicExample() {
           </Card.Body>
         </Card>
       </Row>
-    </>
+    </div>
   );
 }
 
