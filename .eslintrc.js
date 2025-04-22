@@ -75,6 +75,14 @@ module.exports = {
         ignoreFunctionalComponents: true,
       },
     ],
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: true,
+        peerDependencies: true,
+        optionalDependencies: false,
+      },
+    ],
   },
   settings: {
     'import/resolver': {

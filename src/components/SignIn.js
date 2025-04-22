@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { signIn } from '../utils/auth';
+import TypewriterEffect from './TypewriterEffect';
 
 function Signin() {
   return (
@@ -13,9 +14,7 @@ function Signin() {
         margin: '0 auto',
       }}
     >
-      <h1>
-        Welcome to <span className="text-info">KindQuest</span>
-      </h1>
+      <TypewriterEffect />
       <img
         className="spin-on-load"
         style={{
@@ -28,8 +27,8 @@ function Signin() {
         src="/images/logonav.png"
         alt="KindQuest Logo"
       />
-      <p className="text-info">Empowering everyday kindness through community-driven action.</p>
-      <Button type="button" variant="success" size="lg" className="copy-btn" onClick={signIn}>
+      <p className="lead text-light fade-in">Empowering everyday kindness through community-driven action.</p>
+      <Button type="button" variant="warning" size="lg" className="copy-btn fade-in" onClick={signIn}>
         Sign In
       </Button>
     </div>
