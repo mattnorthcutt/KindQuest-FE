@@ -27,7 +27,7 @@ function Home() {
     gsap.fromTo(
       imageRef.current,
       { opacity: 0, scale: 0.8 }, // Start faded and smaller
-      { opacity: 1, scale: 1, duration: 2, ease: 'power2.out', delay: 2 }, // Sync with text animation
+      { opacity: 1, scale: 1, duration: 2, ease: 'power2.out', delay: 1 },
     );
   }, []);
 
@@ -41,7 +41,9 @@ function Home() {
         margin: '0 auto',
       }}
     >
-      <h1>Hello {user?.displayName || 'Friend'}!</h1>
+      <h1>
+        Hello, <span className="username">{user?.displayName || 'Friend'}</span>!
+      </h1>
       <p ref={textRef} className="text-info">
         Start your KindQuest!
       </p>

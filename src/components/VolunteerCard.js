@@ -6,7 +6,7 @@ import Card from 'react-bootstrap/Card';
 
 function VolunteerCard({ volunteerObj }) {
   return (
-    <Card style={{ width: '18rem', margin: '10px' }}>
+    <Card className="volunteer-card" style={{ width: '18rem', margin: '25px' }}>
       <Card.Img variant="top" src={volunteerObj.image || '/images/default-avatar.png'} alt={`${volunteerObj.firstName} ${volunteerObj.lastName}`} />
       <Card.Body>
         <Card.Title>{`${volunteerObj.firstName} ${volunteerObj.lastName}`}</Card.Title>
