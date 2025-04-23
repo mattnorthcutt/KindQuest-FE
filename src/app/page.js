@@ -12,61 +12,48 @@ gsap.registerPlugin(TextPlugin);
 function Home() {
   const { user } = useAuth();
   const textRef = useRef(null);
-  const imageRef = useRef(null);
+
+  useEffect(() => {
+    // Apply background to <body> only when this component mounts
+    document.body.classList.add('home-background');
+
+    return () => {
+      document.body.classList.remove('home-background');
+    };
+  }, []);
 
   useEffect(() => {
     // Text Morph Animation
     gsap.to(textRef.current, {
       duration: 5,
-      delay: 2, // Delay to allow initial text display
+      delay: 2,
       text: 'Empowering everyday kindness in your community.',
       ease: 'power2.out',
     });
-
-    // Image Fade-In + Scale-Up Animation
-    gsap.fromTo(
-      imageRef.current,
-      { opacity: 0, scale: 0.8 }, // Start faded and smaller
-      { opacity: 1, scale: 1, duration: 2, ease: 'power2.out', delay: 1 },
-    );
   }, []);
 
   return (
-    <div
-      className="fade-in text-center d-flex flex-column justify-content-center align-content-center"
-      style={{
-        height: '90vh',
-        padding: '30px',
-        maxWidth: '400px',
-        margin: '0 auto',
-      }}
-    >
-      <h1>
-        Hello, <span className="username">{user?.displayName || 'Friend'}</span>!
-      </h1>
-      <p ref={textRef} className="text-info">
-        Start your KindQuest!
-      </p>
+    <div className="fade-in text-center d-flex flex-column justify-content-center align-items-center home-container">
+      <div className="content-box">
+        <h1>
+          Hello, <span className="username">{user?.displayName || 'Friend'}</span>!
+        </h1>
+        <p ref={textRef} style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#01110a' }}>
+          {' '}
+          Start your KindQuest!{' '}
+        </p>
+        <Link href="/projects" passHref>
+          <Button variant="success" type="button" size="md" className="copy-btn mt-4">
+            View Projects
+          </Button>
+        </Link>
 
-      {/* Image with GSAP animation */}
-      <img
-        ref={imageRef} // Attach GSAP reference
-        src="https://media.istockphoto.com/id/1498170916/photo/a-couple-is-taking-a-bag-of-food-at-the-food-and-clothes-bank.jpg?s=612x612&w=0&k=20&c=0fnD_g46lvoZ5NdzX5zYOSM4PzM95ezfs5uMe9D1QKs="
-        alt="Kindness illustration"
-        style={{ maxWidth: '100%', margin: '20px auto' }}
-      />
-
-      <Link href="/projects" passHref>
-        <Button variant="primary" type="button" size="lg" className="copy-btn mt-4" style={{ width: '100%' }}>
-          View Projects
-        </Button>
-      </Link>
-
-      <Link href="/projects/new" passHref>
-        <Button variant="success" type="button" size="lg" className="copy-btn mt-4" style={{ width: '100%' }}>
-          Create Project
-        </Button>
-      </Link>
+        <Link href="/projects/new" passHref>
+          <Button variant="info" type="button" size="md" className="copy-btn mt-4">
+            Create Projects
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 }

@@ -1,8 +1,8 @@
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; 
-  margin: 0; 
+  min-height: 100vh;
+  margin: 0;
 }
 
 main {
@@ -20,15 +20,11 @@ body.dark {
   color: #f5f5f5;
 }
 
-/* Fix navbar dropdown text color */
 body.dark .dropdown-menu {
   background-color: #1f1f1f;
   color: white;
   flex-direction: column;
-  margin: 0; 
-}
-main {
-  flex-grow: 1;
+  margin: 0;
 }
 
 body.dark .dropdown-item {
@@ -57,31 +53,23 @@ body.dark .dropdown-item:hover {
   to { opacity: 0.7; }
 }
 
-/* Keeps Sign Out Text Red and Makes it a lighter red when you hover oveer it */
-/* Made this so Sign Out Button Stays Red Even In Dark Mode */
 body.dark .dropdown-item.text-danger {
-  color: #dc3545 !important; 
+  color: #dc3545 !important;
 }
 
 body.dark .dropdown-item.text-danger:hover {
   background-color: #3a3a3a;
-  color: #ff6b6b !important; 
+  color: #ff6b6b !important;
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .spin-on-load {
-  animation: spin 1s ease-in-out; 
+  animation: spin 1s ease-in-out;
 }
-
-/* === Theme Toggle Button Styles === */
 
 .theme-toggle-wrapper {
   display: flex;
@@ -127,7 +115,6 @@ body.dark .dropdown-item.text-danger:hover {
   transform: rotate(180deg);
 }
 
-/* Dropdown slide/fade in animation */
 @keyframes dropdownFadeSlide {
   from {
     opacity: 0;
@@ -152,10 +139,10 @@ body.dark .card {
 
 .cards-container {
   display: flex;
-  flex-wrap: wrap; 
-  gap: 16px; 
-  justify-content: center; 
-  padding: 16px; 
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  padding: 16px;
 }
 
 .side-navbar {
@@ -210,42 +197,64 @@ body.dark .card {
   padding-left: 12px;
 }
 
-.cards-container {
-  position: relative;
-  z-index: 1; 
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
-  padding: 16px;
-}
-
 .volunteer-card {
-  width: calc(33.33% - 16px); 
-  max-width: 300px; 
-}
-
-.username {
-  color: #b7e4c7; 
-}
-.copy-btn {
+  width: calc(33.33% - 16px);
+  max-width: 300px;
   transition: all 0.3s ease-in-out;
 }
 
+.volunteer-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  border-color: #b7e4c7;
+}
+
+.username {
+  color: #03045e;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.copy-btn {
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 10px 0;
+}
+
 .copy-btn:hover {
-  background-color: #b7e4c7; 
+  background-color: #b7e4c7;
   color:#081c15;
-  transform: scale(1.05); /* Slight zoom effect */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   border: 2px solid #1b4332;
 }
 
-.volunteer-card {
-  transition: all 0.3s ease-in-out; 
+.home-container {
+  background-image: url("/images/comunitynv.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.volunteer-card:hover {
-  transform: scale(1.05); 
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); 
-  border-color: #b7e4c7; 
+.content-box {
+  background-color: rgba(183, 228, 199, 0.8);
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  width: 80%;
+  max-width: 400px;
+}
+
+h1 {
+  font-size: 1.5rem;
+  color: #081c15;
+  text-align: center;
 }
