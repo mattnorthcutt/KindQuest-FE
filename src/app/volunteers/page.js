@@ -36,13 +36,44 @@ function VolunteersPage() {
         { firebaseKey: 'project006', name: 'Fundraising Campaign' },
       ],
     },
+    {
+      firebaseKey: 'volunteer004',
+      firstName: 'Ella',
+      lastName: 'Smith',
+      image: 'https://bwwla.org/wp-content/uploads/2022/02/DSC08860.jpeg',
+      email: 'ella.smith@example.com',
+      projects: [
+        { firebaseKey: 'project005', name: 'Food Drive' },
+        { firebaseKey: 'project006', name: 'Education and Libraries' },
+      ],
+    },
+    {
+      firebaseKey: 'volunteer005',
+      firstName: 'Hailey',
+      lastName: 'Williams',
+      image: 'https://s28164.pcdn.co/files/Hailey-and-goat-Matthew-G-pic-1280x720.jpg',
+      email: 'charlie.brown@example.com',
+      projects: [{ firebaseKey: 'project007', name: 'Agriculture' }],
+    },
+    {
+      firebaseKey: 'volunteer006',
+      firstName: 'James',
+      lastName: 'Scott',
+      image: 'https://c.stocksy.com/a/zNs400/z9/1162375.jpg',
+      email: 'j.scott@example.com',
+      projects: [{ firebaseKey: 'project009', name: 'Forest Wildlife preservation' }],
+    },
   ];
 
   return (
-    <div className="cards-container">
-      {volunteers.map((volunteer) => (
-        <VolunteerCard key={volunteer.firebaseKey} volunteerObj={volunteer} />
-      ))}
+    <div className="container mt-5">
+      <div className="row">
+        {volunteers.map((volunteer) => (
+          <div key={volunteer.firebaseKey} className="col-md-4 col-sm-6 d-flex">
+            <VolunteerCard volunteerObj={volunteer} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
