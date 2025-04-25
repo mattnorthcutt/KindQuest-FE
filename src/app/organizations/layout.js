@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 export const metadata = {
   title: 'KindQuest - Organizations',
   icons: {
-    icon: '/images/org-favicon.ico',
+    icon: '/images/orgfavicon.ico',
   },
 };
 

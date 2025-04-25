@@ -28,7 +28,7 @@ RootLayout.propTypes = {
 export const metadata = {
   title: 'KindQuest - Home',
   icons: {
-    icon: '/images/home-icon.png',
+    icon: '/images/homefavicon.ico',
   },
 };
 
