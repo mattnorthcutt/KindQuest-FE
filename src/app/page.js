@@ -13,6 +13,18 @@ function Home() {
   const { user } = useAuth();
   const textRef = useRef(null);
 
+  // split(' '): breaks "Matt Northcutt" -> ['Matt', 'Northcutt']
+  // charAt(0).toUpperCase() -> M, N
+  // slice(1).toLowerCase() -> att, orthcutt
+  // Rejoins -> "Matt Northcutt"
+  function capitalizeName(name) {
+    if (!name) return '';
+    return name
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  }
+
   useEffect(() => {
     // Apply background to <body> only when this component mounts
     document.body.classList.add('home-background');
@@ -36,7 +48,7 @@ function Home() {
     <div className="fade-in text-center d-flex flex-column justify-content-center align-items-center home-container">
       <div className="content-box">
         <h1>
-          Hello, <span className="username">{user?.displayName || 'Friend'}</span>!
+          Hello, <span className="username">{capitalizeName(user?.displayName) || 'Friend'}</span>!
         </h1>
         <p ref={textRef} style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#01110a' }}>
           {' '}
