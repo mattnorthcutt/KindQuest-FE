@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
-// import { useAuth } from '../../utils/context/authContext';
-// import { createTask } from '../../api/taskData';
+import { createJob } from '@/api/jobData';
+import { useAuth } from '@/utils/context/authContext';
 
 const initialState = {
   taskName: '',
@@ -18,8 +18,8 @@ const initialState = {
 
 function TaskForm({ obj = initialState }) {
   const [formInput, setFormInput] = useState(obj);
-  // const router = useRouter();
-  // const { user } = useAuth();
+  const router = useRouter();
+  const { user } = useAuth();
 
   useEffect(() => {
     if (obj.taskId) setFormInput(obj);
@@ -47,14 +47,14 @@ function TaskForm({ obj = initialState }) {
       // return;
     }
 
-    // const payload = {
-    //   ...formInput,
-    //   userId: user.uid,
-    // };
+    const payload = {
+      ...formInput,
+      userId: user.uid,
+    };
 
-    // createTask(payload).then(({ id }) => {
-    //   router.push(`/tasks/${id}`);
-    // });
+    createJob(payload).then(({ id }) => {
+      router.push(`/tasks/${id}`);
+    });
   };
 
   return (

@@ -1,27 +1,29 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
-// import { useAuth } from '../../utils/context/authContext';
-// import { createProject } from '../../api/projectData';
+import { createProject } from '@/api/projectData';
+import { useAuth } from '@/utils/context/authContext';
 
 const initialState = {
+  userId: '',
   projectName: '',
   projectDescription: '',
   location: '',
   projectImg: '',
+  projectId: '',
   datePosted: new Date().toISOString().split('T')[0],
   isCompleted: false,
 };
 
 function ProjectForm({ obj = initialState }) {
   const [formInput, setFormInput] = useState(obj);
-  // const router = useRouter();
-  // const { user } = useAuth();
+  const router = useRouter();
+  const { user } = useAuth();
 
   useEffect(() => {
     if (obj.projectId) setFormInput(obj);
@@ -49,14 +51,14 @@ function ProjectForm({ obj = initialState }) {
       // return;
     }
 
-    // const payload = {
-    //   ...formInput,
-    //   userId: user.uid,
-    // };
+    const payload = {
+      ...formInput,
+      userId: user.uid,
+    };
 
-    // createProject(payload).then(({ id }) => {
-    //   router.push(`/projects/${id}`);
-    // });
+    createProject(payload).then(({ id }) => {
+      router.push(`/projects/${id}`);
+    });
   };
 
   return (
@@ -99,6 +101,7 @@ function ProjectForm({ obj = initialState }) {
 
 ProjectForm.propTypes = {
   obj: PropTypes.shape({
+    userId: PropTypes.string,
     projectName: PropTypes.string,
     projectDescription: PropTypes.string,
     location: PropTypes.string,

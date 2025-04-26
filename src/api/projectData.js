@@ -2,7 +2,7 @@ const endpoint = 'https://localhost:7225';
 
 const getProjects = () =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/projects.json`, {
+    fetch(`${endpoint}/projects`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ const getProjects = () =>
 
 const getProjectsById = (id) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/projects.json?orderBy="id"&equalTo="${id}"`, {
+    fetch(`${endpoint}/projects.?orderBy="id"&equalTo="${id}"`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -26,9 +26,9 @@ const getProjectsById = (id) =>
       .catch(reject);
   });
 
-const createProjects = (payload) =>
+const createProject = (payload) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/projects.json`, {
+    fetch(`${endpoint}/projects`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ const createProjects = (payload) =>
 
 const updateProjects = (payload) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/projects/${payload.id}.json`, {
+    fetch(`${endpoint}/projects/${payload.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ const updateProjects = (payload) =>
 
 const deleteProjects = (id) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/projects/${id}.json`, {
+    fetch(`${endpoint}/projects/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -67,4 +67,4 @@ const deleteProjects = (id) =>
       .catch(reject);
   });
 
-export { getProjects, getProjectsById, deleteProjects, createProjects, updateProjects };
+export { getProjects, getProjectsById, deleteProjects, createProject, updateProjects };
