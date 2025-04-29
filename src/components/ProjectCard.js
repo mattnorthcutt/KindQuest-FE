@@ -16,17 +16,17 @@ function ProjectCard({ projectObj, onUpdate }) {
 
   return (
     <Card style={{ width: '18rem', margin: '10px' }}>
-      <Card.Img variant="top" src={projectObj?.projectImg || '/images/default-avatar.png'} />
+      <Card.Img variant="top" src={projectObj.projectImg || '/images/default-avatar.png'} />
       <Card.Body>
         <Card.Title>{projectObj?.projectName}</Card.Title>
         {/* DYNAMIC LINK TO VIEW THE TASK DETAILS  */}
-        <Link href={`/projects/${projectObj?.id}`} passHref>
+        <Link href={`/projects/${projectObj.id}`} passHref>
           <Button variant="primary" className="m-2">
             VIEW
           </Button>
         </Link>
         {/* DYNAMIC LINK TO EDIT THE PROJECT DETAILS  */}
-        <Link href={`/projects/edit/${projectObj?.id}`} passHref>
+        <Link href={`/projects/edit/${projectObj.id}`} passHref>
           <Button variant="info">EDIT</Button>
         </Link>
         <Button variant="danger" onClick={deleteThisProject} className="m-2">

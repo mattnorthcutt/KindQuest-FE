@@ -2,7 +2,7 @@ const endpoint = 'https://localhost:7225';
 
 const getUsers = () =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/users.json`, {
+    fetch(`${endpoint}/users`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ const getUsers = () =>
 
 const getUsersById = (id) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/users.json?orderBy="id"&equalTo="${id}"`, {
+    fetch(`${endpoint}/users?orderBy="id"&equalTo="${id}"`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ const getUsersById = (id) =>
 
 const createUser = (payload) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/users.json`, {
+    fetch(`${endpoint}/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ const createUser = (payload) =>
 
 const updateUser = (payload) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/users/${payload.id}.json`, {
+    fetch(`${endpoint}/users/${payload.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ const updateUser = (payload) =>
 
 const deleteUser = (id) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/users/${id}.json`, {
+    fetch(`${endpoint}/users/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

@@ -15,7 +15,7 @@ const getProjects = () =>
 
 const getProjectsById = (id) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/projects.?orderBy="id"&equalTo="${id}"`, {
+    fetch(`${endpoint}/projects?orderBy="id"&equalTo="${id}"`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +35,14 @@ const createProject = (payload) =>
       },
       body: JSON.stringify(payload),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            throw new Error(`Error: ${text}`);
+          });
+        }
+        return response.json();
+      })
       .then((data) => resolve(data))
       .catch(reject);
   });

@@ -28,7 +28,7 @@ const getJobsById = (id) =>
 
 const createJob = (payload) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/jobs.json`, {
+    fetch(`${endpoint}/jobs`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ const createJob = (payload) =>
 
 const updateJob = (payload) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/jobs/${payload.id}.json`, {
+    fetch(`${endpoint}/jobs/${payload.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ const updateJob = (payload) =>
 
 const deleteJob = (id) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/jobs/${id}.json`, {
+    fetch(`${endpoint}/jobs/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

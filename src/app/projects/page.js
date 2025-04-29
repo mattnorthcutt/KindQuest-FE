@@ -32,7 +32,7 @@ function ProjectsPage() {
       <div className="d-flex flex-wrap">
         {/* map over Projects here using ProjectCard component */}
         {Projects.map((project) => (
-          <ProjectCard key={project.id} ProjectObj={project} onUpdate={getAllTheProjects} />
+          <ProjectCard key={project.id} projectObj={project} onUpdate={getAllTheProjects} />
         ))}
       </div>
     </div>
