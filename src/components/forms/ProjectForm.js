@@ -15,8 +15,6 @@ const initialState = {
   projectDescription: '',
   location: '',
   projectImg: '',
-  projectId: '',
-  datePosted: new Date().toISOString().split('T')[0],
   isCompleted: false,
 };
 
@@ -48,13 +46,16 @@ function ProjectForm({ obj = initialState }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formInput.projectName || !formInput.projectDescription || !formInput.location) {
-      // return;
+      return;
     }
 
     const payload = {
       ...formInput,
       userId: user.uid,
+      datePosted: new Date(formInput.datePosted).toISOString(),
     };
+
+    console.log('payload being sent:', payload);
 
     createProject(payload).then(({ id }) => {
       router.push(`/projects/${id}`);
@@ -108,7 +109,6 @@ ProjectForm.propTypes = {
     projectImg: PropTypes.string,
     datePosted: PropTypes.string,
     isCompleted: PropTypes.bool,
-    projectId: PropTypes.string,
   }),
 };
 
