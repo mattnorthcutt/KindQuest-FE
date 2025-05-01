@@ -1,4 +1,6 @@
-const endpoint = 'https://localhost:7225';
+import { clientCredentials } from '../utils/client';
+
+const endpoint = clientCredentials.databaseURL;
 
 const getProjects = () =>
   new Promise((resolve, reject) => {
