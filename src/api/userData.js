@@ -1,4 +1,6 @@
-const endpoint = 'https://localhost:7225';
+import { clientCredentials } from '../utils/client';
+
+const endpoint = clientCredentials.databaseURL;
 
 const getUsers = () =>
   new Promise((resolve, reject) => {
@@ -23,6 +25,22 @@ const getUsersById = (id) =>
     })
       .then((response) => response.json())
       .then((data) => resolve(Object.values(data)))
+      .catch(reject);
+  });
+
+const getUsersByUid = (uid) =>
+  new Promise((resolve, reject) => {
+    fetch(`${endpoint}/users?orderBy="uid"&equalTo="${uid}"`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const users = Object.values(data);
+        resolve(users[0] || null);
+      })
       .catch(reject);
   });
 
@@ -67,4 +85,4 @@ const deleteUser = (id) =>
       .catch(reject);
   });
 
-export { deleteUser, getUsers, getUsersById, createUser, updateUser };
+export { deleteUser, getUsers, getUsersById, createUser, updateUser, getUsersByUid };

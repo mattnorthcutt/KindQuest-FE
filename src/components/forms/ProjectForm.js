@@ -51,7 +51,8 @@ function ProjectForm({ obj = initialState }) {
 
     const payload = {
       ...formInput,
-      userId: user.uid,
+      Uid: user.uid,
+      CreatorUid: user.uid,
       datePosted: new Date(formInput.datePosted).toISOString(),
     };
 

@@ -1,8 +1,10 @@
-const endpoint = 'https://localhost:7225';
+import { clientCredentials } from '../utils/client';
+
+const endpoint = clientCredentials.databaseURL;
 
 const getJobs = () =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/jobs.json`, {
+    fetch(`${endpoint}/jobs`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -15,7 +17,7 @@ const getJobs = () =>
 
 const getJobsById = (id) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/jobs.json?orderBy="id"&equalTo="${id}"`, {
+    fetch(`${endpoint}/jobs?orderBy="id"&equalTo="${id}"`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
