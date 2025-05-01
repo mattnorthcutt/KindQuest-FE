@@ -2,7 +2,7 @@ import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
 
-const getJobs = () =>
+const getJobs = (projectId) =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/jobs`, {
       method: 'GET',
@@ -11,7 +11,14 @@ const getJobs = () =>
       },
     })
       .then((response) => response.json())
-      .then((data) => resolve(Object.values(data)))
+      .then((data) => {
+        if (data) {
+          const filteredJobs = Object.values(data).filter((job) => job.projectId === projectId);
+          resolve(filteredJobs);
+        } else {
+          resolve([]);
+        }
+      })
       .catch(reject);
   });
 
