@@ -30,7 +30,7 @@ const getUsersById = (id) =>
 
 const getUsersByUid = (uid) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/users?orderBy="uid"&equalTo="${uid}"`, {
+    fetch(`${endpoint}/users`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +39,8 @@ const getUsersByUid = (uid) =>
       .then((response) => response.json())
       .then((data) => {
         const users = Object.values(data);
-        resolve(users[0] || null);
+        const gotchaUser = users.find((user) => user.uid === uid);
+        resolve(gotchaUser || null);
       })
       .catch(reject);
   });
