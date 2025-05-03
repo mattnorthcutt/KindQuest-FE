@@ -16,24 +16,19 @@ function ViewDirectorBasedOnUserAuthStatus({ children }) {
   const [checkBackend, setCheckBackend] = useState(true);
 
   useEffect(() => {
-    if (!userLoading && user && checkBackend) {
-      getUsersByUid(user.uid)
-        .then((existingUser) => {
-          console.log(existingUser);
-          if (!existingUser) {
-            router.replace('/create-profile');
-          } else {
-            setCheckBackend(false);
-          }
-        })
-        .catch((bug) => {
-          console.error(bug);
+    if (!userLoading && user) {
+      getUsersByUid(user.uid).then((existingUser) => {
+        console.log('Fetched user from backend:', existingUser);
+        if (!existingUser) {
+          router.replace('/create-profile');
+        } else {
           setCheckBackend(false);
-        });
+        }
+      });
     } else if (!user && !userLoading) {
       setCheckBackend(false);
     }
-  }, [user, userLoading, checkBackend, router]);
+  }, [user, userLoading, router]);
 
   if (userLoading || checkBackend) return <Loading />;
 
