@@ -15,6 +15,7 @@ const initialState = {
   projectDescription: '',
   location: '',
   projectImg: '',
+  datePosted: new Date().toISOString().split('T')[0], // Default to today's date
   isCompleted: false,
 };
 
@@ -24,7 +25,12 @@ function ProjectForm({ obj = initialState }) {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (obj.projectId) setFormInput(obj);
+    if (obj.id) {
+      setFormInput({
+        ...obj,
+        datePosted: obj.datePosted ? obj.datePosted.split('T')[0] : new Date().toISOString().split('T')[0], // Preserve prior date format
+      });
+    }
   }, [obj]);
 
   const handleChange = (e) => {
@@ -51,21 +57,24 @@ function ProjectForm({ obj = initialState }) {
 
     const payload = {
       ...formInput,
+      datePosted: new Date(formInput.datePosted).toISOString(), // Preserve timestamp format
       Uid: user.uid,
       CreatorUid: user.uid,
-      datePosted: new Date(formInput.datePosted).toISOString(),
     };
 
-    console.log('payload being sent:', payload);
-
-    createProject(payload).then(({ id }) => {
-      router.push(`/projects/${id}`);
-    });
+    // Ensure new projects do not send an `id`
+    if (!formInput.id) {
+      delete payload.id;
+      createProject(payload).then(({ id }) => router.push(`/projects/${id}`));
+    } else {
+      createProject({ ...payload, method: 'PATCH' }) // Ensure this API method supports updates
+        .then(() => router.push(`/projects/${formInput.id}`));
+    }
   };
 
   return (
     <Form onSubmit={handleSubmit} className="text-black">
-      <h2 className="text-white mt-5">{obj.projectId ? 'Update' : 'Create'} Project</h2>
+      <h2 className="text-white mt-5">{formInput.id ? 'Update' : 'Create'} Project</h2>
 
       {/* PROJECT NAME INPUT */}
       <FloatingLabel controlId="floatingInput1" label="Project Name" className="mb-3">
@@ -96,7 +105,7 @@ function ProjectForm({ obj = initialState }) {
       <Form.Check className="text-white mb-3" type="switch" id="isCompleted" name="isCompleted" label="Is Completed?" checked={formInput.isCompleted} onChange={handleToggleChange} />
 
       {/* SUBMIT BUTTON */}
-      <Button type="submit">{obj.projectId ? 'Update' : 'Create'} Project</Button>
+      <Button type="submit">{formInput.id ? 'Update' : 'Create'} Project</Button>
     </Form>
   );
 }
@@ -110,6 +119,7 @@ ProjectForm.propTypes = {
     projectImg: PropTypes.string,
     datePosted: PropTypes.string,
     isCompleted: PropTypes.bool,
+    id: PropTypes.string, // Ensure `id` is checked for edit mode
   }),
 };
 
