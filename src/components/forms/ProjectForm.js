@@ -15,7 +15,7 @@ const initialState = {
   projectDescription: '',
   location: '',
   projectImg: '',
-  datePosted: new Date().toISOString().split('T')[0], // Default to today's date
+  datePosted: new Date().toISOString().split('T')[0],
   isCompleted: false,
 };
 
@@ -28,7 +28,7 @@ function ProjectForm({ obj = initialState }) {
     if (obj.id) {
       setFormInput({
         ...obj,
-        datePosted: obj.datePosted ? obj.datePosted.split('T')[0] : new Date().toISOString().split('T')[0], // Preserve prior date format
+        datePosted: obj.datePosted ? obj.datePosted.split('T')[0] : new Date().toISOString().split('T')[0],
       });
     }
   }, [obj]);
@@ -57,18 +57,16 @@ function ProjectForm({ obj = initialState }) {
 
     const payload = {
       ...formInput,
-      datePosted: new Date(formInput.datePosted).toISOString(), // Preserve timestamp format
+      datePosted: new Date(formInput.datePosted).toISOString(),
       Uid: user.uid,
       CreatorUid: user.uid,
     };
 
-    // Ensure new projects do not send an `id`
     if (!formInput.id) {
       delete payload.id;
       createProject(payload).then(({ id }) => router.push(`/projects/${id}`));
     } else {
-      createProject({ ...payload, method: 'PATCH' }) // Ensure this API method supports updates
-        .then(() => router.push(`/projects/${formInput.id}`));
+      createProject({ ...payload, method: 'PATCH' }).then(() => router.push(`/projects/${formInput.id}`));
     }
   };
 
@@ -119,7 +117,7 @@ ProjectForm.propTypes = {
     projectImg: PropTypes.string,
     datePosted: PropTypes.string,
     isCompleted: PropTypes.bool,
-    id: PropTypes.string, // Ensure `id` is checked for edit mode
+    id: PropTypes.string,
   }),
 };
 
