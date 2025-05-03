@@ -13,7 +13,7 @@ function TaskCard({ task, onEdit, onDelete }) {
     <>
       <Card style={{ width: '18rem', margin: '1rem' }}>
         <Card.Body>
-          <Card.Title>{task.name}</Card.Title>
+          <Card.Title>{task.jobName}</Card.Title>
           <Button variant="primary" onClick={handleView}>
             View
           </Button>{' '}
@@ -35,11 +35,11 @@ function TaskCard({ task, onEdit, onDelete }) {
           <Form>
             <Form.Group>
               <Form.Label>Task Name</Form.Label>
-              <Form.Control type="text" value={task.name} readOnly />
+              <Form.Control type="text" value={task.jobName} readOnly />
             </Form.Group>
             <Form.Group>
               <Form.Label>Task Description</Form.Label>
-              <Form.Control as="textarea" rows={3} value={task.description} readOnly />
+              <Form.Control as="textarea" rows={3} value={task.jobDescription} readOnly />
             </Form.Group>
             <Form.Group>
               <Form.Label>Date Posted</Form.Label>
@@ -63,8 +63,8 @@ function TaskCard({ task, onEdit, onDelete }) {
 TaskCard.propTypes = {
   task: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    jobName: PropTypes.string.isRequired,
+    jobDescription: PropTypes.string.isRequired,
     datePosted: PropTypes.string.isRequired,
     isCompleted: PropTypes.bool.isRequired,
   }).isRequired,
