@@ -34,13 +34,9 @@ export default function CreateUserForm() {
       email: user.email,
     };
 
-    createUser(payload)
-      .then(() => {
-        router.push('/profile');
-      })
-      .catch((bug) => {
-        console.error(bug);
-      });
+    createUser(payload).then(() => {
+      router.push('/profile');
+    });
   };
 
   return (

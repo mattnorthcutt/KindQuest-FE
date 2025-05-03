@@ -2,6 +2,19 @@ import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
 
+const getJobsByProjectId = (projectId) =>
+  new Promise((resolve, reject) => {
+    fetch(`${endpoint}/jobs?orderBy="projectId"&equalTo="${projectId}"`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => resolve(Object.values(data)))
+      .catch(reject);
+  });
+
 const getJobs = (projectId) =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/jobs`, {
@@ -76,4 +89,4 @@ const deleteJob = (id) =>
       .catch(reject);
   });
 
-export { deleteJob, getJobs, getJobsById, createJob, updateJob };
+export { deleteJob, getJobs, getJobsById, createJob, updateJob, getJobsByProjectId };
