@@ -22,7 +22,7 @@ export default function ProjectPage() {
   return (
     <div style={{ padding: '2rem' }}>
       <h2>Project Tasks</h2>
-      <Link href="/tasks/new" passHref>
+      <Link href={`${id}/tasks/new`} passHref>
         <Button>Add A Task</Button>
       </Link>
       {tasks.length > 0 ? (

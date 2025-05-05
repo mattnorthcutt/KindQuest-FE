@@ -9,7 +9,7 @@ export default function NewProjectTaskPage() {
 
   return (
     <div style={{ padding: '2rem' }}>
-      <h1>Create Task for Project {id}</h1>
+      <h1>Create Task for Project</h1>
       <TaskForm projectId={id} />
     </div>
   );
