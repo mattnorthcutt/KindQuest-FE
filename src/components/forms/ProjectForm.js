@@ -10,6 +10,7 @@ import { createProject } from '@/api/projectData';
 import { useAuth } from '@/utils/context/authContext';
 
 const initialState = {
+  userId: '',
   projectName: '',
   projectDescription: '',
   location: '',
@@ -60,6 +61,7 @@ function ProjectForm({ obj = initialState }) {
       Uid: user.uid,
       CreatorUid: user.uid,
     };
+    console.log('Payload:', payload);
 
     if (!formInput.id) {
       delete payload.id;
@@ -116,6 +118,7 @@ ProjectForm.propTypes = {
     datePosted: PropTypes.string,
     isCompleted: PropTypes.bool,
     id: PropTypes.string,
+    userId: PropTypes.string,
   }),
 };
 
