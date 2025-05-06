@@ -61,6 +61,7 @@ function ProjectForm({ obj = initialState }) {
       Uid: user.uid,
       CreatorUid: user.uid,
     };
+    console.log('Payload:', payload);
 
     if (!formInput.id) {
       delete payload.id;
@@ -110,7 +111,6 @@ function ProjectForm({ obj = initialState }) {
 
 ProjectForm.propTypes = {
   obj: PropTypes.shape({
-    userId: PropTypes.string,
     projectName: PropTypes.string,
     projectDescription: PropTypes.string,
     location: PropTypes.string,
@@ -118,6 +118,7 @@ ProjectForm.propTypes = {
     datePosted: PropTypes.string,
     isCompleted: PropTypes.bool,
     id: PropTypes.string,
+    userId: PropTypes.string,
   }),
 };
 
