@@ -10,7 +10,6 @@ import { createProject } from '@/api/projectData';
 import { useAuth } from '@/utils/context/authContext';
 
 const initialState = {
-  userId: '',
   projectName: '',
   projectDescription: '',
   location: '',
@@ -110,7 +109,6 @@ function ProjectForm({ obj = initialState }) {
 
 ProjectForm.propTypes = {
   obj: PropTypes.shape({
-    userId: PropTypes.string,
     projectName: PropTypes.string,
     projectDescription: PropTypes.string,
     location: PropTypes.string,
