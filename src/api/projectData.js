@@ -49,16 +49,36 @@ const createProject = (payload) =>
       .catch(reject);
   });
 
-const updateProjects = (payload) =>
+// Update an existing project
+const updateProjects = (projectId, payload) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/projects/${payload.id}`, {
+    if (!projectId || typeof projectId !== 'string') {
+      reject(new Error('Invalid project ID'));
+      return;
+    }
+
+    if (!payload || typeof payload !== 'object') {
+      reject(new Error('Invalid update data'));
+      return;
+    }
+
+    // Ensure the payload doesn't modify the ID field
+    const sanitizedFields = { ...payload };
+    delete sanitizedFields.id;
+
+    fetch(`${endpoint}/projects/${projectId}`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(sanitizedFields),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            throw new Error(`Update failed: ${text}`);
+          });
+        }
+        return response.json();
+      })
       .then((data) => resolve(data))
       .catch(reject);
   });
@@ -71,7 +91,14 @@ const deleteProjects = (id) =>
         'Content-Type': 'application/json',
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            throw new Error(`Failed to delete project: ${text}`);
+          });
+        }
+        return response.status === 204 ? null : response.json(); // Fix empty response error
+      })
       .then((data) => resolve(data))
       .catch(reject);
   });

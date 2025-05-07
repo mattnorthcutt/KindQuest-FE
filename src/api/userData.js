@@ -1,7 +1,6 @@
 import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
-
 const getUsers = () =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/users`, {
@@ -14,7 +13,6 @@ const getUsers = () =>
       .then((data) => resolve(Object.values(data)))
       .catch(reject);
   });
-
 const getUsersById = (id) =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/users?orderBy="id"&equalTo="${id}"`, {
@@ -27,7 +25,6 @@ const getUsersById = (id) =>
       .then((data) => resolve(Object.values(data)))
       .catch(reject);
   });
-
 const getUsersByUid = (uid) =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/users`, {
@@ -44,7 +41,6 @@ const getUsersByUid = (uid) =>
       })
       .catch(reject);
   });
-
 const createUser = (payload) =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/users`, {
@@ -58,7 +54,6 @@ const createUser = (payload) =>
       .then((data) => resolve(data))
       .catch(reject);
   });
-
 const updateUser = (payload) =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/users/${payload.id}`, {
@@ -72,7 +67,6 @@ const updateUser = (payload) =>
       .then((data) => resolve(data))
       .catch(reject);
   });
-
 const deleteUser = (id) =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/users/${id}`, {
@@ -85,5 +79,4 @@ const deleteUser = (id) =>
       .then((data) => resolve(data))
       .catch(reject);
   });
-
 export { deleteUser, getUsers, getUsersById, createUser, updateUser, getUsersByUid };
