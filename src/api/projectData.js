@@ -17,14 +17,14 @@ const getProjects = () =>
 
 const getProjectsById = (id) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/projects?orderBy="id"&equalTo="${id}"`, {
+    fetch(`${endpoint}/projects/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     })
       .then((response) => response.json())
-      .then((data) => resolve(Object.values(data)))
+      .then(resolve)
       .catch(reject);
   });
 

@@ -258,3 +258,11 @@ h1 {
   color: #081c15;
   text-align: center;
 }
+
+.dropdown-item.view-action {
+  color: #0d6efd !important; 
+}
+
+.dropdown-item.edit-action {
+  color: #198754 !important;
+}

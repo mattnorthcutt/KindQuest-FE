@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import PropTypes from 'prop-types';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
-import { createJob } from '@/api/jobData';
+import { createJob, updateJob } from '@/api/jobData';
 import { useAuth } from '@/utils/context/authContext';
 import { getUsersByUid } from '@/api/userData';
 
@@ -17,16 +17,29 @@ const initialState = {
   isCompleted: false,
 };
 
-function TaskForm({ obj = initialState }) {
+function TaskForm({ obj = initialState, onUpdate }) {
   const [formInput, setFormInput] = useState(obj);
   const [userDbId, setUserDbId] = useState(null);
-  const router = useRouter();
   const { user } = useAuth();
   const { id: projectId } = useParams();
 
   useEffect(() => {
-    if (obj.id) setFormInput(obj);
+    if (obj?.id) {
+      setFormInput({
+        ...obj,
+        datePosted: obj.datePosted?.split('T')[0] || new Date().toISOString().split('T')[0],
+      });
+    }
   }, [obj]);
+
+  useEffect(() => {
+    if (projectId) {
+      setFormInput((prevState) => ({
+        ...prevState,
+        projectId: parseInt(projectId, 10),
+      }));
+    }
+  }, [projectId]);
 
   useEffect(() => {
     if (user?.uid) {
@@ -54,9 +67,6 @@ function TaskForm({ obj = initialState }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formInput.jobName || !formInput.jobDescription) {
-      // return;
-    }
 
     const payload = {
       ...formInput,
@@ -67,14 +77,20 @@ function TaskForm({ obj = initialState }) {
 
     console.log('Payload to send:', payload);
 
-    createJob(payload).then(({ id }) => {
-      router.push(`/projects/${id}`);
-    });
+    if (formInput.id) {
+      updateJob(payload).then(() => {
+        if (typeof onUpdate === 'function') onUpdate();
+      });
+    } else {
+      createJob(payload).then(() => {
+        if (typeof onUpdate === 'function') onUpdate();
+      });
+    }
   };
 
   return (
     <Form onSubmit={handleSubmit} className="text-black">
-      <h2 className="text-white mt-5">{obj.id ? 'Update' : 'Create'} Task</h2>
+      <h2 className="text-white mt-5">{formInput.id ? 'Update' : 'Create'} Task</h2>
 
       {/* TASK NAME INPUT */}
       <FloatingLabel controlId="floatingInput1" label="Task Name" className="mb-3">
@@ -95,7 +111,7 @@ function TaskForm({ obj = initialState }) {
       <Form.Check className="text-white mb-3" type="switch" id="isCompleted" name="isCompleted" label="Is Completed?" checked={formInput.isCompleted} onChange={handleToggleChange} />
 
       {/* SUBMIT BUTTON */}
-      <Button type="submit">{obj.id ? 'Update' : 'Create'} Task</Button>
+      <Button type="submit">{formInput.id ? 'Update' : 'Create'} Task</Button>
     </Form>
   );
 }
@@ -106,12 +122,14 @@ TaskForm.propTypes = {
     jobDescription: PropTypes.string,
     datePosted: PropTypes.string,
     isCompleted: PropTypes.bool,
-    id: PropTypes.string,
+    id: PropTypes.number,
   }),
+  onUpdate: PropTypes.func,
 };
 
 TaskForm.defaultProps = {
   obj: initialState,
+  onUpdate: () => {},
 };
 
 export default TaskForm;
