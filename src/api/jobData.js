@@ -65,7 +65,7 @@ const createJob = (payload) =>
 const updateJob = (payload) =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/jobs/${payload.id}`, {
-      method: 'PATCH',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -84,8 +84,7 @@ const deleteJob = (id) =>
         'Content-Type': 'application/json',
       },
     })
-      .then((response) => response.json())
-      .then((data) => resolve(data))
+      .then(() => resolve(true))
       .catch(reject);
   });
 

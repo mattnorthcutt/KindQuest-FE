@@ -10,7 +10,6 @@ import { createProject } from '@/api/projectData';
 import { useAuth } from '@/utils/context/authContext';
 
 const initialState = {
-  userId: '',
   projectName: '',
   projectDescription: '',
   location: '',
