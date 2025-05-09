@@ -49,7 +49,6 @@ const createProject = (payload) =>
       .catch(reject);
   });
 
-// Update an existing project
 const updateProjects = (projectId, payload) =>
   new Promise((resolve, reject) => {
     if (!projectId || typeof projectId !== 'string') {
@@ -62,25 +61,25 @@ const updateProjects = (projectId, payload) =>
       return;
     }
 
-    // Ensure the payload doesn't modify the ID field
-    const sanitizedFields = { ...payload };
-    delete sanitizedFields.id;
-
     fetch(`${endpoint}/projects/${projectId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(sanitizedFields),
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          return response.text().then((text) => {
-            throw new Error(`Update failed: ${text}`);
-          });
+          const text = await response.text();
+          throw new Error(`Update failed: ${text || response.statusText}`);
         }
         return response.json();
       })
-      .then((data) => resolve(data))
-      .catch(reject);
+      .then(resolve)
+      .catch((error) => {
+        console.error('Update error:', error);
+        reject(error);
+      });
   });
 
 const deleteProjects = (id) =>
