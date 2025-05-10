@@ -6,26 +6,62 @@ import Link from 'next/link';
 import { Button, Card } from 'react-bootstrap';
 import { getJobs, deleteJob } from '@/api/jobData';
 import TaskCard from '@/components/TaskCard';
-import { getProjectsById } from '@/api/projectData';
+import { getProjectWithVolunteers, updateProject } from '@/api/projectData';
+import { useAuth } from '@/utils/context/authContext';
+import { getUsersByUid } from '@/api/userData';
 
 export default function ProjectPage() {
   const { id } = useParams();
   const [tasks, setTasks] = useState([]);
   const [project, setProject] = useState({});
+  const [joinedUsers, setJoinedUsers] = useState([]);
+  const { user } = useAuth();
 
   const getTheUpdatedJobs = () => {
-    getJobs(parseInt(id, 10)).then((jobs) => setTasks(jobs));
+    getJobs(parseInt(id, 10)).then(setTasks);
+  };
+
+  const getProjDet = () => {
+    getProjectWithVolunteers(id).then((proj) => {
+      setProject(proj);
+      setJoinedUsers(proj.volunteers || []);
+    });
   };
 
   useEffect(() => {
     if (id) {
       getTheUpdatedJobs();
-      getProjectsById(id).then(setProject);
+      getProjDet();
     }
   }, [id]);
 
-  const handleUpdate = () => {
-    getTheUpdatedJobs();
+  const handleJoiningProjects = () => {
+    getUsersByUid(user.uid).then((currentUser) => {
+      if (!currentUser) return;
+
+      getProjectWithVolunteers(id).then((projectObj) => {
+        const hasJoined = (projectObj.volunteers || []).some((vol) => vol.id === currentUser.id);
+
+        if (hasJoined) {
+          console.log('User already joined this project.');
+          return;
+        }
+
+        const updatedProject = {
+          ...projectObj,
+          volunteers: [...(projectObj.volunteers || []).map((v) => ({ id: v.id })), { id: currentUser.id }],
+        };
+
+        updateProject(updatedProject)
+          .then(() => {
+            console.log('User successfully joined project.');
+            getProjDet();
+          })
+          .catch((err) => {
+            console.error('Error updating project:', err);
+          });
+      });
+    });
   };
 
   return (
@@ -43,9 +79,9 @@ export default function ProjectPage() {
               <TaskCard
                 key={task.id}
                 task={task}
-                onUpdate={handleUpdate}
+                onUpdate={getTheUpdatedJobs}
                 onDelete={(jobId) => {
-                  deleteJob(jobId).then(handleUpdate);
+                  deleteJob(jobId).then(getTheUpdatedJobs);
                 }}
               />
             ))}
@@ -67,6 +103,25 @@ export default function ProjectPage() {
             <Card.Text>
               <strong>Status:</strong>
               <span style={{ color: project.isCompleted ? 'green' : 'red' }}>{project.isCompleted ? 'Completed' : 'Not Completed'}</span>
+            </Card.Text>
+
+            <Button variant="primary" onClick={handleJoiningProjects} className="my-3">
+              Join Project
+            </Button>
+
+            <Card.Text>
+              <strong>Joined Volunteers:</strong>
+              <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
+                {joinedUsers.length === 0 ? (
+                  <li>No Volunteers</li>
+                ) : (
+                  joinedUsers.map((vol) => (
+                    <li key={vol.id}>
+                      {vol.firstName} {vol.lastName}
+                    </li>
+                  ))
+                )}
+              </ul>
             </Card.Text>
           </Card.Body>
         </Card>

@@ -28,6 +28,19 @@ const getProjectsById = (id) =>
       .catch(reject);
   });
 
+const getProjectWithVolunteers = (volunteers) =>
+  new Promise((resolve, reject) => {
+    fetch(`${endpoint}/projects/?orderBy="volunteers"&equalTo="${volunteers}"`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then(resolve)
+      .catch(reject);
+  });
+
 const createProject = (payload) =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/projects`, {
@@ -49,37 +62,17 @@ const createProject = (payload) =>
       .catch(reject);
   });
 
-// Update an existing project
-const updateProjects = (projectId, payload) =>
+const updateProject = (payload) =>
   new Promise((resolve, reject) => {
-    if (!projectId || typeof projectId !== 'string') {
-      reject(new Error('Invalid project ID'));
-      return;
-    }
-
-    if (!payload || typeof payload !== 'object') {
-      reject(new Error('Invalid update data'));
-      return;
-    }
-
-    // Ensure the payload doesn't modify the ID field
-    const sanitizedFields = { ...payload };
-    delete sanitizedFields.id;
-
-    fetch(`${endpoint}/projects/${projectId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(sanitizedFields),
+    fetch(`${endpoint}/projects/${payload.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
     })
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => {
-            throw new Error(`Update failed: ${text}`);
-          });
-        }
-        return response.json();
-      })
-      .then((data) => resolve(data))
+      .then((res) => res.json())
+      .then(resolve)
       .catch(reject);
   });
 
@@ -103,4 +96,4 @@ const deleteProjects = (id) =>
       .catch(reject);
   });
 
-export { getProjects, getProjectsById, deleteProjects, createProject, updateProjects };
+export { getProjects, getProjectsById, deleteProjects, createProject, updateProject, getProjectWithVolunteers };

@@ -1,6 +1,7 @@
 import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
+
 const getUsers = () =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/users`, {
@@ -54,19 +55,34 @@ const createUser = (payload) =>
       .then((data) => resolve(data))
       .catch(reject);
   });
+
 const updateUser = (payload) =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/users/${payload.id}`, {
-      method: 'PATCH',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(payload, (key, value) => {
+        if (key === 'volunteeredProjects' && Array.isArray(value)) {
+          return value.map((project) => ({ id: project.id }));
+        }
+        return value;
+      }),
     })
-      .then((response) => response.json())
-      .then((data) => resolve(data))
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            console.error('Update failed:', text);
+            throw new Error('Failed to update user');
+          });
+        }
+        return response.text().then((text) => (text ? JSON.parse(text) : {}));
+      })
+      .then(resolve)
       .catch(reject);
   });
+
 const deleteUser = (id) =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/users/${id}`, {
