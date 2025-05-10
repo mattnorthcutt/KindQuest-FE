@@ -73,7 +73,7 @@ function ProjectForm({ obj = initialState, onUpdate }) {
     console.log('Payload being sent:', payload);
 
     try {
-      if (!formInput.id || typeof formInput.id !== 'string' || formInput.id.trim() === '') {
+      if (!formInput.id) {
         delete payload.id; // Ensure new project doesn't carry an existing ID
         const { id } = await createProject(payload);
         if (onUpdate) {
@@ -81,8 +81,9 @@ function ProjectForm({ obj = initialState, onUpdate }) {
         }
         router.push(`/projects/${id}`);
       } else {
-        const projectId = String(formInput.id).trim();
-        await updateProjects(projectId, payload);
+        const projectId = formInput.id;
+        await updateProjects({ ...payload, id: projectId });
+        console.log('Updating project with ID:', formInput.id);
         if (onUpdate) {
           onUpdate();
         }

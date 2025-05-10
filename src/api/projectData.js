@@ -28,6 +28,19 @@ const getProjectsById = (id) =>
       .catch(reject);
   });
 
+const getProjectWithVolunteers = (id) =>
+  new Promise((resolve, reject) => {
+    fetch(`${endpoint}/projects/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then(resolve)
+      .catch(reject);
+  });
+
 const createProject = (payload) =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/projects`, {
@@ -49,37 +62,30 @@ const createProject = (payload) =>
       .catch(reject);
   });
 
-const updateProjects = (projectId, payload) =>
+const updateProjects = (payload) =>
   new Promise((resolve, reject) => {
-    if (!projectId || typeof projectId !== 'string') {
-      reject(new Error('Invalid project ID'));
-      return;
-    }
-
-    if (!payload || typeof payload !== 'object') {
-      reject(new Error('Invalid update data'));
-      return;
-    }
-
-    fetch(`${endpoint}/projects/${projectId}`, {
+    fetch(`${endpoint}/projects/${payload.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload),
     })
-      .then(async (response) => {
+      .then((response) => {
+        const contentType = response.headers.get('content-type');
         if (!response.ok) {
-          const text = await response.text();
-          throw new Error(`Update failed: ${text || response.statusText}`);
+          return response.text().then((text) => {
+            console.error('Update failed:', text);
+            throw new Error('Failed to update project');
+          });
         }
-        return response.json();
+        if (contentType && contentType.includes('application/json')) {
+          return response.json();
+        }
+        return {};
       })
       .then(resolve)
-      .catch((error) => {
-        console.error('Update error:', error);
-        reject(error);
-      });
+      .catch(reject);
   });
 
 const deleteProjects = (id) =>
@@ -102,4 +108,4 @@ const deleteProjects = (id) =>
       .catch(reject);
   });
 
-export { getProjects, getProjectsById, deleteProjects, createProject, updateProjects };
+export { getProjects, getProjectsById, deleteProjects, createProject, updateProjects, getProjectWithVolunteers };
