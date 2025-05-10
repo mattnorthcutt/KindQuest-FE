@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
@@ -22,6 +22,7 @@ function TaskForm({ obj = initialState, onUpdate }) {
   const [userDbId, setUserDbId] = useState(null);
   const { user } = useAuth();
   const { id: projectId } = useParams();
+  const router = useRouter();
 
   useEffect(() => {
     if (obj?.id) {
@@ -84,6 +85,7 @@ function TaskForm({ obj = initialState, onUpdate }) {
     } else {
       createJob(payload).then(() => {
         if (typeof onUpdate === 'function') onUpdate();
+        router.push(`/projects/${projectId}`);
       });
     }
   };

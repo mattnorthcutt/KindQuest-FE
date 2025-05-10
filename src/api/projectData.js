@@ -28,9 +28,9 @@ const getProjectsById = (id) =>
       .catch(reject);
   });
 
-const getProjectWithVolunteers = (volunteers) =>
+const getProjectWithVolunteers = (id) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/projects/?orderBy="volunteers"&equalTo="${volunteers}"`, {
+    fetch(`${endpoint}/projects/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -71,7 +71,19 @@ const updateProjects = (payload) =>
       },
       body: JSON.stringify(payload),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        const contentType = response.headers.get('content-type');
+        if (!response.ok) {
+          return response.text().then((text) => {
+            console.error('Update failed:', text);
+            throw new Error('Failed to update project');
+          });
+        }
+        if (contentType && contentType.includes('application/json')) {
+          return response.json();
+        }
+        return {};
+      })
       .then(resolve)
       .catch(reject);
   });
