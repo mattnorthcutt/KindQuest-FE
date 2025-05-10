@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Button, Card } from 'react-bootstrap';
 import { getJobs, deleteJob } from '@/api/jobData';
 import TaskCard from '@/components/TaskCard';
-import { getProjectWithVolunteers, updateProject } from '@/api/projectData';
+import { getProjectWithVolunteers, updateProjects } from '@/api/projectData';
 import { useAuth } from '@/utils/context/authContext';
 import { getUsersByUid } from '@/api/userData';
 
@@ -52,7 +52,7 @@ export default function ProjectPage() {
           volunteers: [...(projectObj.volunteers || []).map((v) => ({ id: v.id })), { id: currentUser.id }],
         };
 
-        updateProject(updatedProject)
+        updateProjects(updatedProject)
           .then(() => {
             console.log('User successfully joined project.');
             getProjDet();

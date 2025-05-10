@@ -62,7 +62,7 @@ const createProject = (payload) =>
       .catch(reject);
   });
 
-const updateProject = (payload) =>
+const updateProjects = (payload) =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/projects/${payload.id}`, {
       method: 'PUT',
@@ -71,7 +71,7 @@ const updateProject = (payload) =>
       },
       body: JSON.stringify(payload),
     })
-      .then((res) => res.json())
+      .then((response) => response.json())
       .then(resolve)
       .catch(reject);
   });
@@ -96,4 +96,4 @@ const deleteProjects = (id) =>
       .catch(reject);
   });
 
-export { getProjects, getProjectsById, deleteProjects, createProject, updateProject, getProjectWithVolunteers };
+export { getProjects, getProjectsById, deleteProjects, createProject, updateProjects, getProjectWithVolunteers };
